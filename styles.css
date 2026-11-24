@@ -26,7 +26,7 @@
 
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
-body { margin: 0; background: var(--tint) var(--grad) fixed; font-size: 15px; line-height: 1.4; }
+body { margin: 0; background: var(--grad) top center / 100% calc(var(--top) + 48px) no-repeat, #fff; font-size: 15px; line-height: 1.4; }
 a { color: inherit; }
 h1, h2, h3 { margin: 0; letter-spacing: -.02em; }
 small { font-size: inherit; }
@@ -205,7 +205,7 @@ main#app { background: var(--bg); min-height: calc(100vh - var(--top)); border-r
 
 /* ---- Ingreso ---- */
 body.locked .topbar, body.locked main, body.locked .fab, body.locked .nav { display: none; }
-.login { min-height: 100vh; display: grid; place-items: center; padding: 24px; }
+.login { background: #fff; min-height: 100vh; display: grid; place-items: center; padding: 24px; }
 .login-card { width: min(360px, 100%); display: flex; flex-direction: column; gap: 22px; padding: 40px 28px; border: none; border-radius: 30px; }
 .login-logo { height: 42px; width: auto; align-self: center; }
 .login-brand { text-align: center; font-size: 22px; font-weight: 800; color: var(--brand); letter-spacing: .06em; margin-top: -8px; }
@@ -353,10 +353,7 @@ body.locked .topbar, body.locked main, body.locked .fab, body.locked .nav { disp
   --glass-line: rgba(255, 255, 255, .7);
   --blur: blur(22px) saturate(170%);
 }
-main#app {
-  background: var(--glass-soft); border-top: 1px solid var(--glass-line);
-  -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur);
-}
+main#app { background: #fff; }
 .card, .panel, .wizard, .success, .stepper, .item, .login-card, .sol-list, .rows, .ttable, .plan,
 .area-card, .mcard, .stat, .person, .pick-row, .area-choice, .choice, .mchip {
   background: var(--glass); border-color: var(--glass-line);
