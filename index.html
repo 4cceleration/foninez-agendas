@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <title>Fonniñez · Agendas</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="styles.css?v=1">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#/agenda"><b>Fonniñez</b><span>Agendas</span></a>
+    <nav class="nav">
+      <a href="#/agenda" data-nav="agenda">Agenda</a>
+      <a href="#/mi" data-nav="mi">Mi agenda</a>
+      <a href="#/seguimiento" data-nav="seguimiento">Seguimiento</a>
+      <a href="#/ajustes" data-nav="ajustes">Ajustes</a>
+    </nav>
+    <button type="button" class="yo" id="btnYo" data-act="yo"></button>
+    <a class="btn primary" href="#/nueva">+ Agenda</a>
+  </header>
+
+  <main id="app"></main>
+
+  <dialog id="dlgYo">
+    <div class="dialog-head">
+      <h2>¿Quién eres?</h2>
+      <form method="dialog"><button class="ghost" aria-label="Cerrar">✕</button></form>
+    </div>
+    <div class="people" id="yoList"></div>
+  </dialog>
+
+  <datalist id="actividades">
+    <option>Jornada de registro</option>
+    <option>Visita domiciliaria</option>
+    <option>Taller con familias</option>
+    <option>Entrega de kits</option>
+    <option>Seguimiento</option>
+    <option>Reunión comunitaria</option>
+  </datalist>
+
+  <div id="print"></div>
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script src="xlsx.js?v=1"></script>
+  <script src="app.js?v=1"></script>
+</body>
+</html>
