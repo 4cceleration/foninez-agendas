@@ -344,6 +344,49 @@ body.locked .topbar, body.locked main, body.locked .fab, body.locked .nav { disp
 #print { display: none; }
 
 /* =========================================================
+   Vidrio: superficies translúcidas y desenfocadas sobre el degradado
+   ========================================================= */
+:root {
+  --glass: rgba(255, 255, 255, .55);
+  --glass-soft: rgba(255, 255, 255, .38);
+  --glass-strong: rgba(255, 255, 255, .78);
+  --glass-line: rgba(255, 255, 255, .7);
+  --blur: blur(22px) saturate(170%);
+}
+main#app {
+  background: var(--glass-soft); border-top: 1px solid var(--glass-line);
+  -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur);
+}
+.card, .panel, .wizard, .success, .stepper, .item, .login-card, .sol-list, .rows, .ttable, .plan,
+.area-card, .mcard, .stat, .person, .pick-row, .area-choice, .choice, .mchip {
+  background: var(--glass); border-color: var(--glass-line);
+  -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur);
+}
+button, .btn {
+  background: var(--glass); border-color: var(--glass-line);
+  -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur);
+}
+.ghost, .danger-ghost, .icon, .link, .link-danger, .stepper button, .item-tools button, .mchip .x, .tag { -webkit-backdrop-filter: none; backdrop-filter: none; }
+.ghost, .danger-ghost, .icon, .stepper button, .item-tools button { background: transparent; border-color: transparent; }
+button:active, .btn:active, button.on, .btn.on, .primary:hover, .btn.primary:hover, .primary:active, .btn.primary:active { background: var(--brand); border-color: var(--brand); color: #fff; }
+.primary, .btn.primary { border-color: var(--brand); }
+.danger-ghost:active, .icon:active { background: var(--danger); border-color: var(--danger); color: #fff; }
+input, select, textarea { background: var(--glass-strong); border-color: var(--glass-line); }
+input:focus, select:focus, textarea:focus { background: #fff; border-color: var(--brand); }
+.pick-row.on, .stepper li.now button { background: var(--glass-strong); }
+.sol-row:hover, .row:hover { background: rgba(255, 255, 255, .5); }
+.sol-row, .row, .trow { border-bottom-color: rgba(255, 255, 255, .6); }
+.topbar .ghost, .yo { background: var(--glass); border-color: var(--glass-line); -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur); }
+.nav { background: var(--glass); border-color: var(--glass-line); -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur); }
+.nav a.active { background: var(--glass-strong); }
+.fab { background: var(--glass); border-color: var(--glass-line); -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur); }
+dialog { background: var(--glass-strong); -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur); }
+dialog::backdrop { background: rgba(17, 19, 24, .2); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+#toast { background: rgba(17, 19, 24, .72); -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur); }
+.planilla-box, .doc-client { background: var(--glass); }
+.doc { background: #fff; }
+
+/* =========================================================
    Tableta (≥ 640 px)
    ========================================================= */
 @media (min-width: 640px) {
@@ -383,7 +426,7 @@ body.locked .topbar, body.locked main, body.locked .fab, body.locked .nav { disp
     background: none; border: none; border-radius: 0; box-shadow: none;
   }
   .nav a { flex: 0 0 auto; flex-direction: row; height: 40px; padding: 0 16px; border-radius: 99px; font-size: 14px; }
-  .nav a.active { background: var(--bg); }
+  .nav a.active { background: var(--glass-strong); }
   .nav svg { display: none; }
   .nav-cta { display: none !important; }
   .fab { display: grid; }
