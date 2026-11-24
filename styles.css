@@ -65,8 +65,7 @@ button:disabled:hover { border-color: var(--line); color: var(--ink); }
 }
 .nav a:hover { color: var(--ink); }
 .nav a.active { color: var(--ink); border-bottom-color: var(--brand); }
-.yo { max-width: 180px; overflow: hidden; text-overflow: ellipsis; display: inline-block; line-height: 36px; }
-.yo.unset { color: var(--brand); border-color: var(--brand); border-style: dashed; }
+.yo { max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); font-weight: 500; }
 
 /* ---------- Páginas ---------- */
 .page { max-width: 1180px; margin: 0 auto; padding: 36px 24px 80px; }
@@ -238,6 +237,16 @@ select:disabled { background: var(--soft); }
 .mchip .x:active { background: var(--danger); color: #fff; }
 .inline-add { display: flex; gap: 6px; }
 
+/* ---------- Ingreso ---------- */
+body.locked .topbar, body.locked main { display: none; }
+.login { min-height: 100vh; display: grid; place-items: center; padding: 24px; }
+.login[hidden] { display: none; }
+.login-card { width: min(380px, 100%); display: flex; flex-direction: column; gap: 16px; border: 1px solid var(--line); border-radius: 12px; padding: 36px 32px; }
+.login-brand { text-align: center; font-size: 26px; font-weight: 800; color: var(--brand); letter-spacing: -.02em; }
+.login-card h1 { font-size: 20px; text-align: center; margin-bottom: 4px; }
+#loginUser label { width: 100%; }
+.login-card .primary { height: 46px; margin-top: 6px; font-size: 15px; }
+
 /* ---------- Diálogo ---------- */
 dialog { width: min(560px, 92vw); border: 1px solid var(--line); border-radius: 12px; padding: 22px; }
 dialog::backdrop { background: rgba(17, 24, 22, .35); }
@@ -288,6 +297,31 @@ dialog::backdrop { background: rgba(17, 24, 22, .35); }
   .stepper li:not(.now) button { justify-content: center; padding: 0; }
   .wizard { padding: 18px 14px; }
   .assign { flex-wrap: wrap; }
+}
+
+/* ---------- Barra de navegación inferior (celular) ---------- */
+.nav svg { display: none; width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.nav-cta { display: none !important; }
+@media (max-width: 680px) {
+  .topbar { flex-wrap: nowrap; height: 56px; padding: 0 14px; gap: 10px; }
+  .brand { flex: 1; min-width: 0; }
+  .topbar > .btn.primary { display: none; }
+  .nav {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+    display: flex; gap: 0; order: initial; flex-basis: auto; overflow: visible;
+    background: #fff; border-top: 1px solid var(--line);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .nav a, .nav-cta {
+    position: relative; flex: 1; display: flex !important; flex-direction: column; align-items: center; justify-content: center;
+    gap: 3px; height: 62px; padding: 0; margin: 0; font-size: 11px; font-weight: 500;
+    border: none; border-top: 2px solid transparent; background: none;
+  }
+  .nav a.active { color: var(--brand); border-top-color: var(--brand); background: none; }
+  .nav svg { display: block; }
+  .nav .count { position: absolute; top: 6px; left: calc(50% + 6px); }
+  .page { padding-bottom: 100px; }
+  #toast { bottom: 84px; }
 }
 
 /* ---------- Impresión ---------- */

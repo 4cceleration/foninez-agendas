@@ -211,6 +211,7 @@ document.addEventListener("click", (e) => {
 
 const globalActions = {
   yo: openYo,
+  salir: () => { localStorage.removeItem(SESION); setYo(null); checkLogin(); },
   "set-yo": (b) => {
     setYo(b.dataset.id);
     $("#dlgYo").close();
@@ -241,6 +242,41 @@ function openYo() {
   $("#dlgYo").showModal();
 }
 
+/* ---------- Ingreso ---------- */
+// Pantalla de entrada local (sin servidor): elige la persona del equipo; no valida la contraseña.
+
+const SESION = "fonninez.sesion";
+function checkLogin() {
+  const ok = !!load(SESION, null) && !!persona(yo);
+  document.body.classList.toggle("locked", !ok);
+  $("#login").hidden = ok;
+  if (!ok) {
+    $("#formLogin").reset();
+    $("#loginUser").innerHTML = db.personas.length
+      ? `<label>Usuario<select name="user" required>
+          <option value="">—</option>
+          ${db.personas.map((p) => `<option value="${p.id}">${esc(p.nombre)}</option>`).join("")}
+        </select></label>`
+      : `<label>Nombre<input name="nuevo" required autocomplete="name"></label>`;
+  }
+  return ok;
+}
+$("#formLogin").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const f = e.target;
+  let id = f.user?.value;
+  if (!id) {
+    const p = { id: uid(), nombre: f.nuevo.value.trim(), rol: "", telefono: "" };
+    db.personas.push(p);
+    saveDb();
+    id = p.id;
+  }
+  setYo(id);
+  store(SESION, { t: Date.now() });
+  checkLogin();
+  route();
+});
+
 /* ---------- Router ---------- */
 
 const views = {
@@ -251,7 +287,7 @@ const views = {
   nueva: viewNueva,
   a: viewDetalle,
 };
-const navOf = { a: "agenda", nueva: "" };
+const navOf = { a: "agenda" };
 
 function route() {
   const [name = "agenda", id] = location.hash.replace(/^#\/?/, "").split("/");
@@ -265,9 +301,7 @@ function route() {
 window.addEventListener("hashchange", () => { route(); window.scrollTo(0, 0); });
 
 function renderChrome() {
-  const p = persona(yo);
-  $("#btnYo").textContent = p ? p.nombre : "¿Quién eres?";
-  $("#btnYo").classList.toggle("unset", !p);
+  $("#btnYo").textContent = persona(yo)?.nombre || "";
 }
 
 function notFound() {
@@ -886,8 +920,8 @@ function viewAjustes() {
         }
       });
       db.personas.splice(b.dataset.i, 1);
-      if (yo === p.id) setYo(null);
       saveDb();
+      if (yo === p.id) { localStorage.removeItem(SESION); setYo(null); checkLogin(); return; }
       renderEquipo();
     },
     "add-pl": () => {
@@ -914,14 +948,14 @@ function viewAjustes() {
       db.agendas = [];
       setYo(null);
       saveDb();
-      route();
+      checkLogin();
     },
     reset: () => {
       if (!confirm("¿Volver a los datos de ejemplo? Se pierde lo actual.")) return;
       db = seed();
       setYo(null);
       saveDb();
-      route();
+      checkLogin();
     },
   };
 
@@ -932,4 +966,5 @@ function viewAjustes() {
 
 /* ---------- Inicio ---------- */
 
+checkLogin();
 route();
