@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#ffffff">
   <title>Fonniñez · Agendas</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="stylesheet" href="styles.css?v=4">
+  <link rel="stylesheet" href="styles.css?v=5">
 </head>
 <body>
   <header class="topbar">
@@ -18,7 +18,7 @@
       <a href="#/seguimiento" data-nav="seguimiento"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg><span>Seguimiento</span></a>
       <a href="#/ajustes" data-nav="ajustes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg><span>Ajustes</span></a>
     </nav>
-    <span class="yo" id="btnYo"></span>
+    <button type="button" class="yo" id="btnYo" data-act="yo"></button>
     <a class="btn primary" href="#/nueva">+ Agenda</a>
     <button type="button" class="ghost" data-act="salir">Salir</button>
   </header>
@@ -26,9 +26,6 @@
   <section id="login" class="login" hidden>
     <form id="formLogin" class="login-card">
       <div class="login-brand">Fonniñez</div>
-      <h1>Ingresar</h1>
-      <div id="loginUser"></div>
-      <label>Contraseña<input type="password" name="pass" required autocomplete="current-password"></label>
       <button class="primary">Ingresar</button>
     </form>
   </section>
@@ -56,6 +53,6 @@
   <div id="toast" role="status" aria-live="polite"></div>
 
   <script src="xlsx.js?v=1"></script>
-  <script src="app.js?v=3"></script>
+  <script src="app.js?v=4"></script>
 </body>
 </html>

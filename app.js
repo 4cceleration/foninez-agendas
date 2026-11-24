@@ -243,35 +243,17 @@ function openYo() {
 }
 
 /* ---------- Ingreso ---------- */
-// Pantalla de entrada local (sin servidor): elige la persona del equipo; no valida la contraseña.
+// Pantalla de entrada local (sin servidor): solo el botón «Ingresar».
 
 const SESION = "fonninez.sesion";
 function checkLogin() {
-  const ok = !!load(SESION, null) && !!persona(yo);
+  const ok = !!load(SESION, null);
   document.body.classList.toggle("locked", !ok);
   $("#login").hidden = ok;
-  if (!ok) {
-    $("#formLogin").reset();
-    $("#loginUser").innerHTML = db.personas.length
-      ? `<label>Usuario<select name="user" required>
-          <option value="">—</option>
-          ${db.personas.map((p) => `<option value="${p.id}">${esc(p.nombre)}</option>`).join("")}
-        </select></label>`
-      : `<label>Nombre<input name="nuevo" required autocomplete="name"></label>`;
-  }
   return ok;
 }
 $("#formLogin").addEventListener("submit", (e) => {
   e.preventDefault();
-  const f = e.target;
-  let id = f.user?.value;
-  if (!id) {
-    const p = { id: uid(), nombre: f.nuevo.value.trim(), rol: "", telefono: "" };
-    db.personas.push(p);
-    saveDb();
-    id = p.id;
-  }
-  setYo(id);
   store(SESION, { t: Date.now() });
   checkLogin();
   route();
@@ -301,7 +283,9 @@ function route() {
 window.addEventListener("hashchange", () => { route(); window.scrollTo(0, 0); });
 
 function renderChrome() {
-  $("#btnYo").textContent = persona(yo)?.nombre || "";
+  const p = persona(yo);
+  $("#btnYo").textContent = p ? p.nombre : "¿Quién eres?";
+  $("#btnYo").classList.toggle("unset", !p);
 }
 
 function notFound() {
@@ -921,7 +905,7 @@ function viewAjustes() {
       });
       db.personas.splice(b.dataset.i, 1);
       saveDb();
-      if (yo === p.id) { localStorage.removeItem(SESION); setYo(null); checkLogin(); return; }
+      if (yo === p.id) setYo(null);
       renderEquipo();
     },
     "add-pl": () => {
@@ -948,14 +932,14 @@ function viewAjustes() {
       db.agendas = [];
       setYo(null);
       saveDb();
-      checkLogin();
+      route();
     },
     reset: () => {
       if (!confirm("¿Volver a los datos de ejemplo? Se pierde lo actual.")) return;
       db = seed();
       setYo(null);
       saveDb();
-      checkLogin();
+      route();
     },
   };
 
