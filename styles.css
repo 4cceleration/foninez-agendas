@@ -126,6 +126,7 @@ select:disabled { background: var(--soft); }
   font-size: 32px; font-weight: 300; line-height: 1; text-decoration: none;
   box-shadow: 0 2px 4px rgba(17, 24, 22, .06), 0 14px 30px -10px rgba(17, 24, 22, .3);
 }
+.fab svg { width: 26px; height: 26px; display: block; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
 .fab:hover, .fab:active { background: var(--brand); border-color: var(--brand); color: #fff; }
 
 /* ---- Diálogo (hoja inferior en celular) ---- */
