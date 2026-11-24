@@ -211,7 +211,7 @@ document.addEventListener("click", (e) => {
 
 const globalActions = {
   yo: openYo,
-  salir: () => { localStorage.removeItem(SESION); setYo(null); checkLogin(); },
+  salir: () => { $("#dlgYo").close(); localStorage.removeItem(SESION); setYo(null); checkLogin(); },
   "set-yo": (b) => {
     setYo(b.dataset.id);
     $("#dlgYo").close();
@@ -269,10 +269,11 @@ const views = {
   nueva: viewNueva,
   a: viewDetalle,
 };
-const navOf = { a: "agenda" };
+const navOf = { a: "agenda", ajustes: "" };
 
 function route() {
-  const [name = "agenda", id] = location.hash.replace(/^#\/?/, "").split("/");
+  const [hashName, id] = location.hash.replace(/^#\/?/, "").split("/");
+  const name = hashName || (yo ? "mi" : "agenda");
   view = {};
   $$("dialog[open]").forEach((d) => d.close());
   const nav = navOf[name] ?? name;
@@ -344,16 +345,15 @@ function timeline(a) {
 /* ---------- Vista: Agenda ---------- */
 
 const fAg = { vista: "proximas", municipio: "", persona: "" };
+const VISTAS_OK = ["proximas", "disponibles", "completadas"];
 
 function viewAgenda() {
   ctx.f = fAg;
   const t = today();
   const VISTAS = {
     proximas: ["Próximas", (a) => a.fecha >= t && !["cancelada", "completada"].includes(a.estado)],
-    hoy: ["Hoy", (a) => a.fecha === t],
     disponibles: ["Disponibles", (a) => a.estado === "disponible" && a.fecha >= t],
     completadas: ["Completadas", (a) => a.estado === "completada"],
-    todas: ["Todas", () => true],
   };
 
   app.innerHTML = `
@@ -366,16 +366,12 @@ function viewAgenda() {
             <option value="">Todos los municipios</option>
             ${db.municipios.map((m) => `<option>${esc(m)}</option>`).join("")}
           </select>
-          <select data-bind="f.persona" aria-label="Responsable">
-            <option value="">Todo el equipo</option>
-            <option value="-">Sin asignar</option>
-            ${db.personas.map((p) => `<option value="${p.id}">${esc(p.nombre)}</option>`).join("")}
-          </select>
         </div>
       </div>
       <div id="lista"></div>
     </div>`;
 
+  if (!VISTAS_OK.includes(fAg.vista)) fAg.vista = "proximas";
   function render() {
     $("#chips").innerHTML = Object.entries(VISTAS).map(([k, [label, fn]]) => `
       <button class="chip ${fAg.vista === k ? "on" : ""}" data-act="chip" data-v="${k}">
@@ -385,7 +381,7 @@ function viewAgenda() {
       .filter(VISTAS[fAg.vista][1])
       .filter((a) => !fAg.municipio || a.municipio === fAg.municipio)
       .filter((a) => !fAg.persona || (fAg.persona === "-" ? !a.personaId : a.personaId === fAg.persona));
-    $("#lista").innerHTML = grouped(list, ["completadas", "todas"].includes(fAg.vista));
+    $("#lista").innerHTML = grouped(list, fAg.vista === "completadas");
   }
 
   view.actions = { chip: (b) => { fAg.vista = b.dataset.v; render(); } };
@@ -441,7 +437,7 @@ function viewMi() {
 function miCard(a) {
   const next = NEXT[a.estado];
   return `
-    <article class="mcard">
+    <article class="mcard" data-act="open" data-id="${a.id}">
       <div class="mcard-top">
         <div>
           <span class="muted">${dayLabel(a.fecha)} · ${esc(a.hora)}</span>
@@ -453,7 +449,6 @@ function miCard(a) {
       ${trackBar(a)}
       <div class="mcard-actions">
         <button data-act="xlsx" data-id="${a.id}">Planilla ↓</button>
-        <a class="btn" href="#/a/${a.id}">Ver</a>
         ${next ? `<button class="primary grow" data-act="avanzar" data-id="${a.id}" data-to="${next.estado}">${next.label}</button>` : ""}
       </div>
     </article>`;
@@ -618,29 +613,25 @@ function viewDetalle(id) {
 
       <div class="two-col">
         <section class="panel">
-          <div class="assign">
-            <label>Responsable
+          <div class="primary-row">
+            ${a.estado === "disponible" ? `<button class="primary big" data-act="tomar" data-id="${a.id}">Asignarme</button>` : ""}
+            ${next ? `<button class="primary big" data-act="avanzar" data-id="${a.id}" data-to="${next.estado}">${next.label}</button>` : ""}
+            <button class="big" data-act="xlsx" data-id="${a.id}">Planilla ↓</button>
+          </div>
+          ${trackBar(a)}
+          ${timeline(a)}
+          <button class="link" data-act="imprimir" data-id="${a.id}">Imprimir planilla de ${esc(pl?.nombre || "—")}</button>
+        </section>
+
+        <details class="panel edit">
+          <summary>Editar</summary>
+          <div class="grid">
+            <label class="span-2">Responsable
               <select id="asignarSel" ${cerrada ? "disabled" : ""}>
                 <option value="">Sin asignar</option>
                 ${db.personas.map((p) => `<option value="${p.id}" ${p.id === a.personaId ? "selected" : ""}>${esc(p.nombre)}</option>`).join("")}
               </select>
             </label>
-            ${a.estado === "disponible" ? `<button class="primary" data-act="tomar" data-id="${a.id}">Asignarme</button>` : ""}
-            ${next ? `<button class="primary" data-act="avanzar" data-id="${a.id}" data-to="${next.estado}">${next.label}</button>` : ""}
-          </div>
-          ${trackBar(a)}
-          ${timeline(a)}
-          <div class="planilla-box">
-            <div><strong>Planilla</strong><span class="muted">${esc(pl?.nombre || "—")}</span></div>
-            <div class="head-actions">
-              <button data-act="xlsx" data-id="${a.id}">Excel ↓</button>
-              <button data-act="imprimir" data-id="${a.id}">Imprimir</button>
-            </div>
-          </div>
-        </section>
-
-        <section class="panel">
-          <div class="grid">
             <label>Fecha<input type="date" data-bind="ag.fecha"></label>
             <label>Hora<input type="time" data-bind="ag.hora"></label>
             <label class="span-2">Municipio
@@ -657,7 +648,7 @@ function viewDetalle(id) {
             ${cerrada ? "" : `<button class="danger-ghost" data-act="cancelar">Cancelar agenda</button>`}
             <button class="danger-ghost" data-act="eliminar">Eliminar</button>
           </div>
-        </section>
+        </details>
       </div>
     </div>`;
 
