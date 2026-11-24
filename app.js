@@ -11,7 +11,7 @@ const app = $("#app");
 
 /* ---------- Utilidades ---------- */
 
-const KEY = "fonninez.v1";
+const KEY = "fonninez.v2";
 const YO_KEY = "fonninez.yo";
 
 const load = (k, d) => {
@@ -90,11 +90,11 @@ const MUNICIPIOS = [
 function seed() {
   const P = (nombre, rol) => ({ id: uid(), nombre, rol, telefono: "" });
   const personas = [
-    P("Ana Gómez", "Psicosocial"),
-    P("Carlos Ruiz", "Promotor"),
-    P("Diana López", "Trabajo social"),
-    P("Jorge Henao", "Promotor"),
-    P("Laura Marín", "Coordinación"),
+    P("Usuario prueba 1", "Psicosocial"),
+    P("Usuario prueba 2", "Promotor"),
+    P("Usuario prueba 3", "Trabajo social"),
+    P("Usuario prueba 4", "Promotor"),
+    P("Usuario prueba 5", "Coordinación"),
   ];
   const planillas = [
     { id: uid(), nombre: "Asistencia", columnas: ["Nombre completo", "Documento", "Edad", "Acudiente", "Teléfono", "Firma"], filas: 25 },
