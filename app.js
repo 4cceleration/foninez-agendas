@@ -1,5 +1,5 @@
 /* =========================================================
-   Fonniñez · Agendas de campo
+   FONIÑEZ · Agendas de campo
    El equipo toma agendas por municipio, descarga la planilla
    y registra el recorrido (salí → llegué → terminé).
    Datos en localStorage.
@@ -530,7 +530,7 @@ function exportarSeguimiento() {
     "Salida", "Llegada", "Fin", "Ubicación llegada"];
   const hora = (a, e) => { const ev = a.eventos.filter((x) => x.estado === e).pop(); return ev ? fmtTime(ev.t) : ""; };
   const rows = [
-    [{ v: "Fonniñez · Seguimiento de agendas", s: 1 }],
+    [{ v: "FONIÑEZ · Seguimiento de agendas", s: 1 }],
     [],
     head.map((h) => ({ v: h, s: 3 })),
     ...[...db.agendas].sort(byFechaHora).map((a) => {
@@ -542,7 +542,7 @@ function exportarSeguimiento() {
       ].map((v) => ({ v, s: 4 }));
     }),
   ];
-  XLSX.download(`Seguimiento Fonniñez ${today()}.xlsx`, "Seguimiento", rows,
+  XLSX.download(`Seguimiento FONIÑEZ ${today()}.xlsx`, "Seguimiento", rows,
     [12, 8, 18, 18, 22, 20, 13, 9, 9, 9, 20]);
 }
 
@@ -564,7 +564,7 @@ function descargarPlanilla(a, pl = planilla(a?.planillaId)) {
   if (!pl) return toast("No hay planillas");
   const cols = ["N.º", ...pl.columnas];
   const rows = [
-    [{ v: `Fonniñez · Planilla de ${pl.nombre}`, s: 1 }],
+    [{ v: `FONIÑEZ · Planilla de ${pl.nombre}`, s: 1 }],
     [],
     ...planillaInfo(a).map(([k, v]) => [{ v: k, s: 2 }, { v }]),
     [],
@@ -581,7 +581,7 @@ function imprimirPlanilla(a) {
   if (!pl) return toast("No hay planillas");
   $("#print").innerHTML = `
     <div class="pl-head">
-      <div><div class="pl-brand">Fonniñez</div><h1>Planilla de ${esc(pl.nombre)}</h1></div>
+      <div><div class="pl-brand">FONIÑEZ</div><h1>Planilla de ${esc(pl.nombre)}</h1></div>
       <dl>${planillaInfo(a).map(([k, v]) => `<dt>${k}</dt><dd>${esc(v) || "&nbsp;"}</dd>`).join("")}</dl>
     </div>
     <table class="pl-table">
