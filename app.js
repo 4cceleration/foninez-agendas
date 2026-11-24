@@ -300,6 +300,7 @@ function agendaRow(a) {
   const tomar = a.estado === "disponible" && a.fecha >= today();
   return `
     <div class="row" role="link" tabindex="0" data-act="open" data-id="${a.id}">
+      <span class="chk ${a.estado === "completada" ? "on" : ""}"></span>
       <span class="hora">${esc(a.hora) || "—"}</span>
       <span class="main">
         <strong>${esc(a.municipio)}</strong>
@@ -940,6 +941,7 @@ function viewAjustes() {
 }
 
 /* ---------- Inicio ---------- */
+
 
 checkLogin();
 route();

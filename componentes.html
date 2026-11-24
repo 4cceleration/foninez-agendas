@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Componentes · FONIÑEZ</title>
+  <link rel="stylesheet" href="styles.css?v=20">
+  <style>
+    .kit section { margin-bottom: 30px; }
+    .kit h2 { font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin: 0 0 12px; }
+    .kit .demo { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .kit .nav { position: static; }
+    .kit .fab { position: static; display: grid; }
+    .kit .stack { display: grid; gap: 12px; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html"><img src="assets/logo-comfamiliar.png" alt="Comfamiliar Risaralda"><span class="brand-sep"></span><span class="brand-txt"><b>FONIÑEZ</b></span></a>
+    <button class="ghost">Salir</button>
+  </header>
+  <main id="app">
+    <div class="page narrow kit">
+      <div class="page-head"><h1>Componentes</h1></div>
+
+      <section>
+        <h2>Botones</h2>
+        <div class="demo">
+          <button>Secundario</button>
+          <button class="primary">Principal</button>
+          <button class="on">Activo</button>
+          <button class="ghost">Fantasma</button>
+          <button class="danger-ghost">Eliminar</button>
+          <button class="small">Pequeño</button>
+          <button disabled>Desactivado</button>
+          <button class="icon" title="Quitar">✕</button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Campos</h2>
+        <div class="grid">
+          <label>Texto<input placeholder="Escribe aquí"></label>
+          <label>Lista<select><option>Opción 1</option><option>Opción 2</option></select></label>
+          <label class="span-2">Área de texto<textarea rows="3" placeholder="Detalle"></textarea></label>
+        </div>
+      </section>
+
+      <section>
+        <h2>Filtros</h2>
+        <div class="chips">
+          <button class="chip on">Todas 12</button>
+          <button class="chip">Disponibles 4</button>
+          <button class="chip">Completadas 8</button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Check</h2>
+        <div class="demo"><span class="chk"></span><span class="chk on"></span></div>
+      </section>
+
+      <section>
+        <h2>Estados</h2>
+        <div class="demo">
+          <span class="badge st-disponible">Disponible</span>
+          <span class="badge st-asignada">Asignada</span>
+          <span class="badge st-en_camino">En camino</span>
+          <span class="badge st-en_sitio">En sitio</span>
+          <span class="badge st-completada">Completada</span>
+          <span class="badge st-cancelada">Cancelada</span>
+        </div>
+      </section>
+
+      <section>
+        <h2>Tarjeta de agenda</h2>
+        <article class="mcard">
+          <div class="mcard-top"><div><span class="muted">Hoy · 08:00</span><h3>Quinchía</h3><p>Jornada de registro</p></div><span class="badge st-en_camino">En camino</span></div>
+          <ol class="track"><li class="on"><span></span>Asignada</li><li class="on"><span></span>En camino</li><li><span></span>En sitio</li><li><span></span>Completada</li></ol>
+          <div class="mcard-actions"><button>Planilla ↓</button><button class="primary grow">Llegué</button></div>
+        </article>
+      </section>
+
+      <section>
+        <h2>Lista de agendas</h2>
+        <div class="rows">
+          <div class="row"><span class="chk on"></span><span class="hora">08:00</span><span class="main"><strong>Marsella</strong><span>Jornada de registro</span></span><span class="who">Usuario prueba 1</span><span class="badge st-completada">Completada</span><span class="row-act"></span></div>
+          <div class="row"><span class="chk"></span><span class="hora">14:00</span><span class="main"><strong>Apía</strong><span>Entrega de kits</span></span><span class="who"></span><span class="badge st-disponible">Disponible</span><span class="row-act"><button class="small">Asignarme</button></span></div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Indicadores</h2>
+        <div class="stats">
+          <div class="stat"><b>7</b><span>Agendas</span></div>
+          <div class="stat s-disponible"><b>2</b><span>Sin asignar</span></div>
+          <div class="stat s-en_camino"><b>1</b><span>En camino</span></div>
+          <div class="stat s-completada"><b>3</b><span>Completadas</span></div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Pasos</h2>
+        <ol class="stepper">
+          <li class="done"><button><span class="n">✓</span><span class="l">Municipios</span></button></li>
+          <li class="now"><button><span class="n">2</span><span class="l">Fecha</span></button></li>
+          <li><button disabled><span class="n">3</span><span class="l">Actividad</span></button></li>
+          <li><button disabled><span class="n">4</span><span class="l">Responsable</span></button></li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Opciones</h2>
+        <div class="choices">
+          <button class="choice on">Disponible<small>Cualquiera la toma</small></button>
+          <button class="choice">Usuario prueba 1<small>Psicosocial</small></button>
+          <button class="choice">Usuario prueba 2<small>Promotor</small></button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Personas</h2>
+        <div class="people">
+          <button class="person on"><strong>Usuario prueba 1</strong><span>Psicosocial</span></button>
+          <button class="person"><strong>Usuario prueba 2</strong><span>Promotor</span></button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Municipios</h2>
+        <div class="mchips"><span class="mchip">Pereira<button class="x">✕</button></span><span class="mchip">Quinchía<button class="x">✕</button></span></div>
+      </section>
+
+      <section>
+        <h2>Botón flotante</h2>
+        <a class="fab" href="#">+</a>
+      </section>
+
+      <section>
+        <h2>Navegación</h2>
+        <nav class="nav">
+      <a href="#/mi" data-nav="mi" class="active"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c0-3.6 3.4-5.5 7.5-5.5s7.5 1.9 7.5 5.5"/></svg><span>Mi agenda</span></a>
+      <a href="#/agenda" data-nav="agenda"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span>Agenda</span></a>
+      <a href="#/nueva" data-nav="nueva" class="nav-cta"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><path d="M12 8v8M8 12h8"/></svg><span>Nueva</span></a>
+      <a href="#/seguimiento" data-nav="seguimiento"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg><span>Seguimiento</span></a>
+    </nav>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
